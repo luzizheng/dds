@@ -77,6 +77,82 @@ void discovery_lookup_endpoint(const char *topic) {
     printf("Endpoint data: %s\n", m.m1_p1);
 }
 
+// Register a participant with the discovery service
+int discovery_register_participant(DDS_Participant *participant) {
+    if (!participant) {
+        fprintf(stderr, "Invalid participant\n");
+        return -1;
+    }
+
+    message m;
+    m.m1_p1 = (void *)&participant->domain_id;
+    m.m1_i1 = sizeof(participant->domain_id);
+
+    // Send participant registration request
+    if (ipc_send(getpid(), &m) != 0) {
+        fprintf(stderr, "Failed to register participant\n");
+        return -1;
+    }
+
+    return 0;
+}
+
+// Register a publisher with the discovery service
+int discovery_register_publisher(DDS_Participant *participant, const char *topic) {
+    if (!participant || !topic) {
+        fprintf(stderr, "Invalid arguments for publisher registration\n");
+        return -1;
+    }
+
+    char frame[FRAME_SIZE];
+    memset(frame, 0, FRAME_SIZE);
+    snprintf(frame, FRAME_SIZE - CRC16_TRAILER_SIZE, "%s|%s", topic, "pub");
+
+    // Compute CRC16 trailer
+    uint16_t crc = compute_crc16(frame, FRAME_SIZE - CRC16_TRAILER_SIZE);
+    memcpy(frame + FRAME_SIZE - CRC16_TRAILER_SIZE, &crc, CRC16_TRAILER_SIZE);
+
+    // Send publisher registration frame
+    message m;
+    m.m1_p1 = frame;
+    m.m1_i1 = FRAME_SIZE;
+    if (ipc_send(getpid(), &m) != 0) {
+        fprintf(stderr, "Failed to register publisher\n");
+        return -1;
+    }
+
+    return 0;
+}
+
+// Register a subscriber with the discovery service
+int discovery_register_subscriber(DDS_Participant *participant, const char *topic) {
+    if (!participant || !topic) {
+        fprintf(stderr, "Invalid arguments for subscriber registration\n");
+        return -1;
+    }
+
+    char frame[FRAME_SIZE];
+    memset(frame, 0, FRAME_SIZE);
+    snprintf(frame, FRAME_SIZE - CRC16_TRAILER_SIZE, "%s|%s", topic, "sub");
+
+    // Compute CRC16 trailer
+    uint16_t crc = compute_crc16(frame, FRAME_SIZE - CRC16_TRAILER_SIZE);
+    memcpy(frame + FRAME_SIZE - CRC16_TRAILER_SIZE, &crc, CRC16_TRAILER_SIZE);
+
+    // Send subscriber registration frame
+    message m;
+    m.m1_p1 = frame;
+    m.m1_i1 = FRAME_SIZE;
+    if (ipc_send(getpid(), &m) != 0) {
+        fprintf(stderr, "Failed to register subscriber\n");
+        return -1;
+    }
+
+    return 0;
+}
+
+
+
 // Discovery service interface
 Discovery_Interface discovery_service = {
     .register_endpoint = discovery_register_endpoint,
