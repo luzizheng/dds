@@ -23,5 +23,11 @@ extern Discovery_Interface discovery_service;
 void discovery_register_endpoint(const char *topic, int is_publisher);
 void discovery_lookup_endpoint(const char *topic);
 
+// Register a participant with the discovery service
+int discovery_register_participant(DDS_Participant *participant);
+// Register a publisher with the discovery service
+int discovery_register_publisher(DDS_Participant *participant, const char *topic);
+// Register a subscriber with the discovery service
+int discovery_register_subscriber(DDS_Participant *participant, const char *topic);
 
 #endif // DISCOVERY_H
