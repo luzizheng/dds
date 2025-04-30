@@ -1,3 +1,13 @@
+/*
+ * @Author: LuZizheng lu.zizheng@byd.com
+ * @Date: 2025-04-30 09:16:51
+ * @LastEditors: LuZizheng lu.zizheng@byd.com
+ * @LastEditTime: 2025-04-30 09:20:44
+ * @FilePath: /Dinix/bydos/lib/dds/transport.c
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by BYD, All Rights Reserved. 
+ */
 #include "transport.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,7 +15,9 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <errno.h>
+
 
 // Define maximum payload size and header size
 #define MAX_PAYLOAD_SIZE 1024

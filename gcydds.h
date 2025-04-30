@@ -1,12 +1,22 @@
-#ifndef DDS_H
-#define DDS_H
+/*
+ * @Author: LuZizheng lu.zizheng@byd.com
+ * @Date: 2025-04-30 09:16:24
+ * @LastEditors: LuZizheng lu.zizheng@byd.com
+ * @LastEditTime: 2025-04-30 10:16:43
+ * @FilePath: /Dinix/bydos/lib/dds/gcydds.h
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by BYD, All Rights Reserved. 
+ */
+#ifndef GCY_DDS_H
+#define GCY_DDS_H
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 // Domain ID max
-#define MAX_DOMAIN_ID 255
-
+#define DDS_MAX_DOMAIN_ID 32
+#define DDS_ENDPOINT "gcydds"
 // Participant structure
 typedef struct {
     uint8_t domain_id;   // Domain ID for segregation

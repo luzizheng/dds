@@ -1,6 +1,7 @@
 #include "serialization.h"
 #include <string.h>
 
+
 int serialize_payload(const void *data, size_t size, void *buffer, size_t buffer_size) {
     if (size > buffer_size) {
         return -1; // Not enough space

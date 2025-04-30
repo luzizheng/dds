@@ -1,5 +1,15 @@
-#ifndef TRANSPORT_H
-#define TRANSPORT_H
+/*
+ * @Author: LuZizheng lu.zizheng@byd.com
+ * @Date: 2025-04-30 09:16:43
+ * @LastEditors: LuZizheng lu.zizheng@byd.com
+ * @LastEditTime: 2025-04-30 09:21:47
+ * @FilePath: /Dinix/bydos/lib/dds/transport.h
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by BYD, All Rights Reserved. 
+ */
+#ifndef DDS_TRANSPORT_H
+#define DDS_TRANSPORT_H
 
 #include <stdint.h>
 #include <stddef.h>
