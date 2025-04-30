@@ -43,5 +43,8 @@ DDS_Subscriber *dds_create_subscriber(DDS_Participant *participant, const char *
 
 int dds_publish(DDS_Publisher *publisher, const void *data, size_t size);
 int dds_subscribe(DDS_Subscriber *subscriber);
+int dds_remove_participant(DDS_Participant *participant);
+int dds_remove_publisher(DDS_Publisher *publisher);
+int dds_remove_subscriber(DDS_Subscriber *subscriber);
 
 #endif // DDS_H
