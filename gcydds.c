@@ -107,3 +107,58 @@ int dds_subscribe(DDS_Subscriber *subscriber) {
     // Use the transport layer to listen for messages
     return transport_receive(subscriber->participant->domain_id, subscriber->topic, subscriber->on_data_received);
 }
+
+// Remove a participant
+int dds_remove_participant(DDS_Participant *participant) {
+    if (!participant) {
+        return -1; // Invalid argument
+    }
+
+    // Deregister the participant from the discovery daemon
+    if (discovery_deregister_participant(participant) != 0) {
+        return -1; // Deregistration failed
+    }
+
+    // Free the participant memory
+    free(participant);
+    return 0;
+}
+
+// Remove a publisher
+int dds_remove_publisher(DDS_Publisher *publisher) {
+    if (!publisher) {
+        return -1; // Invalid argument
+    }
+
+    // Deregister the publisher from the discovery daemon
+    if (discovery_deregister_publisher(publisher->participant, publisher->topic) != 0) {
+        return -1; // Deregistration failed
+    }
+
+    // Free the publisher memory
+    free(publisher);
+    return 0;
+}
+
+// Remove a subscriber
+int dds_remove_subscriber(DDS_Subscriber *subscriber) {
+    if (!subscriber) {
+        return -1; // Invalid argument
+    }
+
+    // Deregister the subscriber from the discovery daemon
+    if (discovery_deregister_subscriber(subscriber->participant, subscriber->topic) != 0) {
+        return -1; // Deregistration failed
+    }
+
+    // Free the subscriber memory
+    free(subscriber);
+    return 0;
+}
+
+
+
+
+
+
+
